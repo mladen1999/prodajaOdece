@@ -5,6 +5,7 @@ import { AddAdministratorDto } from 'src/dtos/administrator/add.administrator.dt
 import { Repository } from 'typeorm';
 import * as crypto from 'crypto'
 import { EditAdministratorDto } from 'src/dtos/administrator/edit.administrator.dto';
+import { ApiResponse } from 'src/misc/api.response.class';
 
 @Injectable()
 export class AdministratorService {
@@ -22,7 +23,7 @@ export class AdministratorService {
     }
 
     // add Funkcija
-    add(data: AddAdministratorDto): Promise<Administrator> {
+    add(data: AddAdministratorDto): Promise<Administrator | ApiResponse> {
         // DTO => Nas model
         // username => username
         // password =[~]==> passwordHash ! Stvar izbora!   |   Mi cemo koristiti SHA512 za passwordHash
@@ -35,11 +36,24 @@ export class AdministratorService {
         newAdmin.username = data.username;
         newAdmin.passwordHash = passwordHashString;
 
-        return this.administrator.save(newAdmin);
+        return new Promise((resolve) => {
+            this.administrator.save(newAdmin)
+            .then(data => resolve(data))
+            .catch(error => {
+                const response: ApiResponse = new ApiResponse("error", -1001);
+                resolve(response);
+            });
+        });
     }
 
-    async editById(id: number, data: EditAdministratorDto): Promise<Administrator> {
+    async editById(id: number, data: EditAdministratorDto): Promise<Administrator | ApiResponse> {
         let admin: Administrator = await this.administrator.findOne(id);
+
+        if(admin === undefined) {
+            return new Promise((resolve) => {
+                resolve(new ApiResponse("error", -1002));
+            });
+        }
 
         const passwordHash = crypto.createHash('sha512');
         passwordHash.update(data.password);
