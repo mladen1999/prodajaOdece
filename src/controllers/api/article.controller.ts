@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Param, Patch, Post, Req, UploadedFile, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Delete, Param, Patch, Post, Req, UploadedFile, UseGuards, UseInterceptors } from "@nestjs/common";
 import { Crud } from "@nestjsx/crud";
 import { Article } from "src/entities/article.entity";
 import { AddArticleDto } from "src/dtos/article/add.article.dto";
@@ -13,6 +13,8 @@ import * as fileType from 'file-type';
 import * as fs from 'fs';
 import * as sharp from 'sharp';
 import { EditArticleDto } from "src/dtos/article/edit.article.dto";
+import { RoleCheckedGuard } from "src/misc/role.checker.guard";
+import { AllowToRoles } from "src/misc/allow.to.roles.descriptor";
 
 @Controller('api/article')
 @Crud({ // Crud kontroler koristi vec predefinisane setove operacija tj predefinisane funkcije koje rade CRUD na osnovu CRUD akotacija
@@ -56,16 +58,22 @@ export class ArticleController {
     ) { }
 
     @Post('createFull') // POST http://localhost:3000/api/article/createFull/
+    @UseGuards(RoleCheckedGuard)
+    @AllowToRoles('administrator')
     createFullArticle(@Body() data: AddArticleDto) {
         return this.service.createFullArticle(data);
     }
 
     @Patch(':id') // POST http://localhost:3000/api/article/2/
+    @UseGuards(RoleCheckedGuard)
+    @AllowToRoles('administrator')
     editFullArticle(@Param('id') id: number, @Body() data: EditArticleDto) {
         return this.service.editFullArticle(id, data);
     }
 
     @Post(':id/uploadPhoto/') // POST http://localhost:3000/api/article/:id/uploadPhoto/
+    @UseGuards(RoleCheckedGuard)
+    @AllowToRoles('administrator')
     @UseInterceptors( // Rad sa presretacima
         FileInterceptor('photo', {
             storage: diskStorage({
@@ -187,6 +195,8 @@ export class ArticleController {
     }
 
     @Delete(':articleId/deletePhoto/:photoId/') // http://localhost:3000/api/article/1/deletePhoto/45/
+    @UseGuards(RoleCheckedGuard)
+    @AllowToRoles('administrator')
     public async deletePhoto(
         @Param('articleId') articleId: number,
         @Param('photoId') photoId: number,
