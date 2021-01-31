@@ -203,9 +203,9 @@ export class ArticleService extends TypeOrmCrudService<Article> {
         builder.skip(page * perPage);
         builder.take(perPage);
 
-        let articleIds = await (await builder.getMany()).map(article => {
+        let articleIds = await (await builder.getMany()).map(article => 
             article.articleId
-        });
+        );
         
 
 
