@@ -15,6 +15,7 @@ import * as sharp from 'sharp';
 import { EditArticleDto } from "src/dtos/article/edit.article.dto";
 import { RoleCheckedGuard } from "src/misc/role.checker.guard";
 import { AllowToRoles } from "src/misc/allow.to.roles.descriptor";
+import { ArticleSearchDto } from "src/dtos/article/article.search.dto";
 
 @Controller('api/article')
 @Crud({ // Crud kontroler koristi vec predefinisane setove operacija tj predefinisane funkcije koje rade CRUD na osnovu CRUD akotacija
@@ -245,6 +246,14 @@ export class ArticleController {
             }
 
             return new ApiResponse('ok', 0, 'One photo deleted!');
-        }
+    }
+    
+    // POST http://localhost:3000/api/article/seatch/
+    @Post('search')
+    @UseGuards(RoleCheckedGuard)
+    @AllowToRoles('administrator', 'user')
+    async search(@Body() data: ArticleSearchDto): Promise<Article[]> {
+        return await this.service.search(data);
+    }
 
 }
