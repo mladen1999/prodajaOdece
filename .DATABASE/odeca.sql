@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `article` (
   PRIMARY KEY (`article_id`),
   KEY `fk_article_category_id` (`category_id`),
   CONSTRAINT `fk_article_category_id` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DELETE FROM `article`;
 /*!40000 ALTER TABLE `article` DISABLE KEYS */;
@@ -50,7 +50,9 @@ INSERT INTO `article` (`article_id`, `name`, `category_id`, `excerpt`, `descript
 	(1, 'A NIKE M NSW SS TEE GB', 5, 'Kratak opis', 'Detaljan opis', 'available', 0, '2021-01-04 10:29:39'),
 	(2, 'NIKE M NSW TEE EDIT GB', 5, 'Neki kratak tekst..._2', 'Neki malo duzi tekst o proizvodu._2', 'visible', 1, '2021-01-04 18:59:30'),
 	(3, 'JAKNA NIKE', 3, 'Kratak opis jakne', 'Detaljan opis nike janke', 'available', 0, '2021-01-31 10:30:24'),
-	(4, 'A JAKNA NIKE', 3, 'Kratak opis za jaknu', 'Neki malo duzi opis za NIKE jaknu 1', 'available', 0, '2021-01-31 18:45:20');
+	(4, 'A JAKNA NIKE', 3, 'Kratak opis za jaknu', 'Neki malo duzi opis za NIKE jaknu 1', 'available', 0, '2021-01-31 18:45:20'),
+	(6, 'Nike crvena majica', 5, 'Crvena nike majica', 'Detaljan opis nike crvene majice', 'available', 0, '2021-02-06 19:04:52'),
+	(7, 'Nike jakna TSW', 3, 'Ovo je nike jakna', 'Ovo je detaljan opis nike jakne', 'available', 0, '2021-02-06 19:17:10');
 /*!40000 ALTER TABLE `article` ENABLE KEYS */;
 
 DROP TABLE IF EXISTS `article_feature`;
@@ -64,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `article_feature` (
   KEY `fk_article_feature_feature_id` (`feature_id`),
   CONSTRAINT `fk_article_feature_article_id` FOREIGN KEY (`article_id`) REFERENCES `article` (`article_id`) ON UPDATE CASCADE,
   CONSTRAINT `fk_article_feature_feature_id` FOREIGN KEY (`feature_id`) REFERENCES `feature` (`feature_id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DELETE FROM `article_feature`;
 /*!40000 ALTER TABLE `article_feature` DISABLE KEYS */;
@@ -91,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `article_price` (
   PRIMARY KEY (`article_price_id`),
   KEY `fk_article_price_article_id` (`article_id`),
   CONSTRAINT `fk_article_price_article_id` FOREIGN KEY (`article_id`) REFERENCES `article` (`article_id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DELETE FROM `article_price`;
 /*!40000 ALTER TABLE `article_price` DISABLE KEYS */;
@@ -101,7 +103,9 @@ INSERT INTO `article_price` (`article_price_id`, `article_id`, `price`, `created
 	(3, 2, 56.89, '2021-01-04 18:59:33'),
 	(4, 2, 57.11, '2021-01-29 12:23:35'),
 	(5, 3, 120.00, '2021-01-31 10:30:54'),
-	(6, 4, 140.00, '2021-01-31 18:46:11');
+	(6, 4, 140.00, '2021-01-31 18:46:11'),
+	(7, 6, 30.00, '2021-02-06 19:05:15'),
+	(8, 7, 30.00, '2021-02-06 19:17:49');
 /*!40000 ALTER TABLE `article_price` ENABLE KEYS */;
 
 DROP TABLE IF EXISTS `cart`;
@@ -112,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `cart` (
   PRIMARY KEY (`cart_id`),
   KEY `fk_cart_user_id` (`user_id`),
   CONSTRAINT `fk_cart_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DELETE FROM `cart`;
 /*!40000 ALTER TABLE `cart` DISABLE KEYS */;
@@ -126,7 +130,11 @@ INSERT INTO `cart` (`cart_id`, `user_id`, `created_at`) VALUES
 	(7, 1, '2021-02-01 09:08:41'),
 	(8, 1, '2021-02-01 09:13:56'),
 	(9, 1, '2021-02-01 09:14:46'),
-	(10, 1, '2021-02-04 10:01:49');
+	(10, 1, '2021-02-04 10:01:49'),
+	(11, 1, '2021-02-06 12:07:51'),
+	(12, 9, '2021-02-06 12:24:26'),
+	(13, 9, '2021-02-06 17:23:43'),
+	(14, 9, '2021-02-06 17:31:05');
 /*!40000 ALTER TABLE `cart` ENABLE KEYS */;
 
 DROP TABLE IF EXISTS `cart_article`;
@@ -140,7 +148,7 @@ CREATE TABLE IF NOT EXISTS `cart_article` (
   KEY `fk_cart_article_article_id` (`article_id`),
   CONSTRAINT `fk_cart_article_article_id` FOREIGN KEY (`article_id`) REFERENCES `article` (`article_id`) ON UPDATE CASCADE,
   CONSTRAINT `fk_cart_article_cart_id` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`cart_id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DELETE FROM `cart_article`;
 /*!40000 ALTER TABLE `cart_article` DISABLE KEYS */;
@@ -160,7 +168,12 @@ INSERT INTO `cart_article` (`cart_article_id`, `cart_id`, `article_id`, `quantit
 	(16, 8, 1, 3),
 	(17, 9, 2, 1),
 	(18, 9, 1, 3),
-	(19, 10, 1, 3);
+	(19, 10, 1, 3),
+	(20, 11, 1, 3),
+	(21, 12, 3, 3),
+	(25, 12, 1, 1),
+	(26, 12, 2, 1),
+	(27, 13, 1, 3);
 /*!40000 ALTER TABLE `cart_article` ENABLE KEYS */;
 
 DROP TABLE IF EXISTS `category`;
@@ -218,7 +231,7 @@ CREATE TABLE IF NOT EXISTS `order` (
   PRIMARY KEY (`order_id`),
   UNIQUE KEY `uq_order_cart_id` (`cart_id`),
   CONSTRAINT `fk_order_cart_id` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`cart_id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DELETE FROM `order`;
 /*!40000 ALTER TABLE `order` DISABLE KEYS */;
@@ -229,7 +242,9 @@ INSERT INTO `order` (`order_id`, `created_at`, `cart_id`, `status`) VALUES
 	(8, '2021-02-01 09:09:15', 7, 'pending'),
 	(9, '2021-02-01 09:14:22', 8, 'pending'),
 	(10, '2021-02-01 09:15:19', 9, 'rejected'),
-	(11, '2021-02-04 10:02:45', 10, 'pending');
+	(11, '2021-02-04 10:02:45', 10, 'pending'),
+	(12, '2021-02-06 17:22:48', 12, 'pending'),
+	(13, '2021-02-06 17:25:14', 13, 'pending');
 /*!40000 ALTER TABLE `order` ENABLE KEYS */;
 
 DROP TABLE IF EXISTS `photo`;
@@ -241,7 +256,7 @@ CREATE TABLE IF NOT EXISTS `photo` (
   UNIQUE KEY `uq_photo_image_path` (`image_path`),
   KEY `fk_photo_article_id` (`article_id`),
   CONSTRAINT `fk_photo_article_id` FOREIGN KEY (`article_id`) REFERENCES `article` (`article_id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DELETE FROM `photo`;
 /*!40000 ALTER TABLE `photo` DISABLE KEYS */;
@@ -249,7 +264,9 @@ INSERT INTO `photo` (`photo_id`, `article_id`, `image_path`) VALUES
 	(10, 2, '2021128-7545007921-slika2.jpg'),
 	(12, 3, '202125-4285382312-nike1.jpg'),
 	(13, 4, '202125-2488382656-nika111.jpg'),
-	(14, 1, '202125-4195228660-majica1.jpg');
+	(14, 1, '202125-4195228660-majica1.jpg'),
+	(15, 6, '202126-4485368128-cop.png'),
+	(16, 7, '202126-7266244995-nikej1.jpg');
 /*!40000 ALTER TABLE `photo` ENABLE KEYS */;
 
 DROP TABLE IF EXISTS `user`;
@@ -287,7 +304,7 @@ CREATE TABLE IF NOT EXISTS `user_token` (
   PRIMARY KEY (`user_token_id`),
   KEY `fk_user_token_user_id` (`user_id`),
   CONSTRAINT `fk_user_token_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DELETE FROM `user_token`;
 /*!40000 ALTER TABLE `user_token` DISABLE KEYS */;
@@ -314,7 +331,14 @@ INSERT INTO `user_token` (`user_token_id`, `user_id`, `created_at`, `token`, `ex
 	(71, 7, '2021-02-05 12:36:05', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoidXNlciIsImlkIjo3LCJpZGVudGl0eSI6InByb2JhQHByb2JhLnJzIiwiZXhwIjoxNjE1MjAzMzY1LjE3OSwiaXAiOiI6OjEiLCJ1YSI6Ik1vemlsbGEvNS4wIChXaW5kb3dzIE5UIDEwLjA7IFdpbjY0OyB4NjQpIEFwcGxlV2ViS2l0LzUzNy4zNiAoS0hUTUwsIGxpa2UgR2Vja28pIENocm9tZS84OC4wLjQzMjQuOTYgU2FmYXJpLzUzNy4zNiBFZGcvODguMC43MDUuNTYiLCJpYXQiOjE2MTI1MjQ5NjV9.ydiUqbV7e2my4GaQvcYLCYqh46u1ItP_RvoGYvJPVq0', '2021-03-08 11:36:05', 1),
 	(72, 8, '2021-02-05 14:07:57', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoidXNlciIsImlkIjo4LCJpZGVudGl0eSI6Im5pa29Abmlrby5uaWtvIiwiZXhwIjoxNjE1MjA4ODc3LjkwNywiaXAiOiI6OjEiLCJ1YSI6Ik1vemlsbGEvNS4wIChXaW5kb3dzIE5UIDEwLjA7IFdpbjY0OyB4NjQpIEFwcGxlV2ViS2l0LzUzNy4zNiAoS0hUTUwsIGxpa2UgR2Vja28pIENocm9tZS84OC4wLjQzMjQuOTYgU2FmYXJpLzUzNy4zNiBFZGcvODguMC43MDUuNTYiLCJpYXQiOjE2MTI1MzA0Nzd9.rmgEG2qJJ5UJZ4kbcmrr3XtUs9qTaFJPKl3spFCaNnQ', '2021-03-08 13:07:57', 1),
 	(73, 7, '2021-02-05 18:29:41', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoidXNlciIsImlkIjo3LCJpZGVudGl0eSI6InByb2JhQHByb2JhLnJzIiwiZXhwIjoxNjE1MjI0NTgxLjQwMywiaXAiOiI6OjEiLCJ1YSI6Ik1vemlsbGEvNS4wIChXaW5kb3dzIE5UIDEwLjA7IFdpbjY0OyB4NjQpIEFwcGxlV2ViS2l0LzUzNy4zNiAoS0hUTUwsIGxpa2UgR2Vja28pIENocm9tZS84OC4wLjQzMjQuOTYgU2FmYXJpLzUzNy4zNiBFZGcvODguMC43MDUuNTYiLCJpYXQiOjE2MTI1NDYxODF9.oAsFDAGNG7wntvMtNlEMrcyjuvXKFlV94DTf89E3w_w', '2021-03-08 17:29:41', 1),
-	(74, 9, '2021-02-05 18:45:55', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoidXNlciIsImlkIjo5LCJpZGVudGl0eSI6Im1sYWRlbnZ0c0BnbWFpbC5jb20iLCJleHAiOjE2MTUyMjU1NTUuMjY1LCJpcCI6Ijo6MSIsInVhIjoiTW96aWxsYS81LjAgKFdpbmRvd3MgTlQgMTAuMDsgV2luNjQ7IHg2NCkgQXBwbGVXZWJLaXQvNTM3LjM2IChLSFRNTCwgbGlrZSBHZWNrbykgQ2hyb21lLzg4LjAuNDMyNC45NiBTYWZhcmkvNTM3LjM2IEVkZy84OC4wLjcwNS41NiIsImlhdCI6MTYxMjU0NzE1NX0.hPpBH0nz0RbDqetTaa9lgOKjDiIINwTC_qRNnph4NdY', '2021-03-08 17:45:55', 1);
+	(74, 9, '2021-02-05 18:45:55', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoidXNlciIsImlkIjo5LCJpZGVudGl0eSI6Im1sYWRlbnZ0c0BnbWFpbC5jb20iLCJleHAiOjE2MTUyMjU1NTUuMjY1LCJpcCI6Ijo6MSIsInVhIjoiTW96aWxsYS81LjAgKFdpbmRvd3MgTlQgMTAuMDsgV2luNjQ7IHg2NCkgQXBwbGVXZWJLaXQvNTM3LjM2IChLSFRNTCwgbGlrZSBHZWNrbykgQ2hyb21lLzg4LjAuNDMyNC45NiBTYWZhcmkvNTM3LjM2IEVkZy84OC4wLjcwNS41NiIsImlhdCI6MTYxMjU0NzE1NX0.hPpBH0nz0RbDqetTaa9lgOKjDiIINwTC_qRNnph4NdY', '2021-03-08 17:45:55', 1),
+	(75, 9, '2021-02-06 08:31:25', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoidXNlciIsImlkIjo5LCJpZGVudGl0eSI6Im1sYWRlbnZ0c0BnbWFpbC5jb20iLCJleHAiOjE2MTUyNzUwODUuMDc4LCJpcCI6Ijo6MSIsInVhIjoiTW96aWxsYS81LjAgKFdpbmRvd3MgTlQgMTAuMDsgV2luNjQ7IHg2NCkgQXBwbGVXZWJLaXQvNTM3LjM2IChLSFRNTCwgbGlrZSBHZWNrbykgQ2hyb21lLzg4LjAuNDMyNC4xNTAgU2FmYXJpLzUzNy4zNiBFZGcvODguMC43MDUuNjMiLCJpYXQiOjE2MTI1OTY2ODV9.ajyR1-JaCAcZ-945CtuKyqXEuNIULFKhl2FOdtfXjUI', '2021-03-09 07:31:25', 1),
+	(76, 9, '2021-02-06 08:35:33', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoidXNlciIsImlkIjo5LCJpZGVudGl0eSI6Im1sYWRlbnZ0c0BnbWFpbC5jb20iLCJleHAiOjE2MTUyNzUzMzMuODUsImlwIjoiOjoxIiwidWEiOiJNb3ppbGxhLzUuMCAoV2luZG93cyBOVCAxMC4wOyBXaW42NDsgeDY0KSBBcHBsZVdlYktpdC81MzcuMzYgKEtIVE1MLCBsaWtlIEdlY2tvKSBDaHJvbWUvODguMC40MzI0LjE1MCBTYWZhcmkvNTM3LjM2IEVkZy84OC4wLjcwNS42MyIsImlhdCI6MTYxMjU5NjkzM30.E5E4pRihMlK-PheSVNafilI7ceqxj6Jf_ccovciEetk', '2021-03-09 07:35:33', 1),
+	(77, 1, '2021-02-06 10:06:59', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoidXNlciIsImlkIjoxLCJpZGVudGl0eSI6InRlc3RAdGVzdC5ycyIsImV4cCI6MTYxNTI4MDgxOS44ODUsImlwIjoiOjoxIiwidWEiOiJQb3N0bWFuUnVudGltZS83LjI2LjEwIiwiaWF0IjoxNjEyNjAyNDE5fQ.Tlmq3IzXQF9z_edUDlahU3XEHK1b6UmHYQ_M0nHI1NE', '2021-03-09 09:06:59', 1),
+	(78, 9, '2021-02-06 12:05:13', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoidXNlciIsImlkIjo5LCJpZGVudGl0eSI6Im1sYWRlbnZ0c0BnbWFpbC5jb20iLCJleHAiOjE2MTUyODc5MTMuNzAxLCJpcCI6Ijo6MSIsInVhIjoiTW96aWxsYS81LjAgKFdpbmRvd3MgTlQgMTAuMDsgV2luNjQ7IHg2NCkgQXBwbGVXZWJLaXQvNTM3LjM2IChLSFRNTCwgbGlrZSBHZWNrbykgQ2hyb21lLzg4LjAuNDMyNC4xNTAgU2FmYXJpLzUzNy4zNiBFZGcvODguMC43MDUuNjMiLCJpYXQiOjE2MTI2MDk1MTN9.acJ-tmJHYV6TwZy389b_n5yO3ckpJdn9b3dnCIQcOco', '2021-03-09 11:05:13', 1),
+	(79, 9, '2021-02-06 18:30:43', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoidXNlciIsImlkIjo5LCJpZGVudGl0eSI6Im1sYWRlbnZ0c0BnbWFpbC5jb20iLCJleHAiOjE2MTUzMTEwNDMuMjksImlwIjoiOjpmZmZmOjEyNy4wLjAuMSIsInVhIjoiTW96aWxsYS81LjAgKFdpbmRvd3MgTlQgMTAuMDsgV2luNjQ7IHg2NCkgQXBwbGVXZWJLaXQvNTM3LjM2IChLSFRNTCwgbGlrZSBHZWNrbykgQ2hyb21lLzg4LjAuNDMyNC4xNTAgU2FmYXJpLzUzNy4zNiBFZGcvODguMC43MDUuNjMiLCJpYXQiOjE2MTI2MzI2NDN9.G6s1IoQeJyoh1Oc8LULbSg1VjetLVpUFxCjz4hukok4', '2021-03-09 17:30:43', 1),
+	(80, 9, '2021-02-06 18:46:22', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoidXNlciIsImlkIjo5LCJpZGVudGl0eSI6Im1sYWRlbnZ0c0BnbWFpbC5jb20iLCJleHAiOjE2MTUzMTE5ODIuMzA0LCJpcCI6Ijo6MSIsInVhIjoiTW96aWxsYS81LjAgKFdpbmRvd3MgTlQgMTAuMDsgV2luNjQ7IHg2NCkgQXBwbGVXZWJLaXQvNTM3LjM2IChLSFRNTCwgbGlrZSBHZWNrbykgQ2hyb21lLzg4LjAuNDMyNC4xNTAgU2FmYXJpLzUzNy4zNiBFZGcvODguMC43MDUuNjMiLCJpYXQiOjE2MTI2MzM1ODJ9.CLxhIiknP7oGjTFk5Uy8eiOLSpaAFZFtveMA7DtkzSw', '2021-03-09 17:46:22', 1),
+	(81, 9, '2021-02-06 19:01:45', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoidXNlciIsImlkIjo5LCJpZGVudGl0eSI6Im1sYWRlbnZ0c0BnbWFpbC5jb20iLCJleHAiOjE2MTUzMTI5MDUuMjEsImlwIjoiOjoxIiwidWEiOiJNb3ppbGxhLzUuMCAoV2luZG93cyBOVCAxMC4wOyBXaW42NDsgeDY0KSBBcHBsZVdlYktpdC81MzcuMzYgKEtIVE1MLCBsaWtlIEdlY2tvKSBDaHJvbWUvODguMC40MzI0LjE1MCBTYWZhcmkvNTM3LjM2IEVkZy84OC4wLjcwNS42MyIsImlhdCI6MTYxMjYzNDUwNX0.Jeol46YGyv2_RL64UbKuVl0AjL3tJnFO8LRDftx1kyA', '2021-03-09 18:01:45', 1);
 /*!40000 ALTER TABLE `user_token` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
